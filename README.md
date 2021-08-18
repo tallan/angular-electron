@@ -124,7 +124,7 @@ Run the application again
 ``` npm run electron ```
 
 
-![a](./images/Electron_API_Error.png)
+![](./images/Electron_API_Error.png)
 
 It looks like we now have an issue with Electron utilizing NodeJS.Require behind the scenes. What happened? It would appear that whatever is supplying the definition for NodeJS might be incorrect.  Looking at the package.json file we can see that the types package for Node is using version 12.  We need to use version 14 or higher.  Update this to be 14 or greater (currently 16 is latest at the time of this tutorial.) and run the following again.
 ``` 
@@ -200,14 +200,14 @@ Start the application again.
 ``` npm run electron ```
 
 SUCCESS! Note the Electron header we added.
-![a](./images/Success_Electron_Running.png)
+![](./images/Success_Electron_Running.png)
 
 Running the Angular in the browser should still work lets test it!
 
 ``` ng serve -o ```
 
 SUCCESS!
-![a](./images/Success_Web_App_Running.png)
+![](./images/Success_Web_App_Running.png)
 
 In some rare cases you may experience compilation errors about common.js dependencies.  To remedy this open your tsconfig.json file and update the target property to "es5".
 
@@ -216,7 +216,7 @@ I hope this has helped anyone who was running into issues!
 ## The Short Version
 
 ### Repository
-['View the repository']()
+[View the repository](https://github.com/tallan/angular-electron)
 
 ### Folder Structure
 
