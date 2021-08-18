@@ -243,12 +243,15 @@ polyfill-webpack.config.js
 ![](./images/polyfill-webpack.config.png)
 
 app.component.ts
+
 ![](./images/app.component.changes.png)
 
 app.module.ts
+
 ![](./images/app.module.changes.png)
 
 tsconfig.json
+
 ![](./images/tsconfig.changes.png)
 
 
