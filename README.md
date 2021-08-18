@@ -124,7 +124,7 @@ Run the application again
 ``` npm run electron ```
 
 
-![](Electron_API_Error.png)
+![](images/Electron_API_Error.png)
 
 It looks like we now have an issue with Electron utilizing NodeJS.Require behind the scenes. What happened? It would appear that whatever is supplying the definition for NodeJS might be incorrect.  Looking at the package.json file we can see that the types package for Node is using version 12.  We need to use version 14 or higher.  Update this to be 14 or greater (currently 16 is latest at the time of this tutorial.) and run the following again.
 ``` 
