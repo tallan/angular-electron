@@ -1,11 +1,11 @@
 # Angular 12 and Electron Setup with Webpack 5
 
-For those that have attempted to update your Electron projects that are using Angular to version 12, you might have noticed that Electron is not playing nice out of the box.  Recent updates to Webpack (version 5) have removed Node polyfills causing issues when trying to instanciate anything Electron related in the browser.  With Webpack abstracted away within Angular, we will need to find another way of adding these polyfills back.
+For those that have attempted to update your Electron projects to use Angular version 12, you might have noticed that Electron is not playing nice out of the box.  Recent updates to Webpack (version 5) have removed Node polyfills causing issues when trying to instantiate anything Electron related in the browser.  With Webpack abstracted away within Angular, we will need to find another way of adding these polyfills back.
 
-For those that just want the step by step resolution (you know who you are....) skip to the bottom.  I've supplied instructions and a diff of all files that need to be updated in a default Angular 12 project.  If you are starting from scratch and want to ensure you are configuring everything correctly, read on.
+For those that just want the step-by-step resolution (you know who you are....) skip to the bottom.  I've supplied instructions and a diff of all files that need to be updated in a default Angular 12 project.  If you are starting from scratch and want to ensure you are configuring everything correctly, read on.
 
 ## Application Setup
-Lets start with the Angular application.  If you haven't already download/install the latest Angular CLI from npm locally.
+Let’s start with the Angular application.  If you haven't already download/install the latest Angular CLI from npm locally.
 
 ```npm i -g @angular/cli```
 
@@ -13,7 +13,7 @@ Now create a new project in your desired folder in the terminal of VS Code or an
 
 ``` ng n {my-project-name} --style=scss --routing=true```
 
-Once the CLI has finished it's thing, lets ensure that the application works right out of the box.  Navigate into the newly created project folder. 
+Once the CLI has finished its thing, let’s ensure that the application works right out of the box.  Navigate into the newly created project folder. 
 
 ``` cd {my-project-name} ```
 
@@ -27,7 +27,7 @@ Install Electron
 
 ```npm i -D electron```
 
-To make development in Angular a little easier lets add a library that wraps the Electron API for us NGX.
+To make development in Angular a little easier let’s add a library that wraps the Electron API for us NGX.
 
 ``` npm i --save ngx-electron```
 
@@ -89,7 +89,7 @@ Let's try running the application.
 
 Your application is now running in Electron congratulations!  BUT NOT SO FAST!
 
-Lets try utilizing the Electron API in the application.  We will start with something simple that determines if the application is running in the browser or Electron.
+Let’s try utilizing the Electron API in the application.  We will start with something simple that determines if the application is running in the browser or Electron.
 
 Add ngx-electron to your applications app.module.ts file.
 
@@ -97,7 +97,7 @@ Add ngx-electron to your applications app.module.ts file.
 
 and don't forget to add it to your imports in the same file.
 
-Now open your app.component.ts file and replace the contents with the follwing.  Note we are just adding the electron service from ngx-electron and injecting it into the constructor.  OnInit we are using the electron API to update the title based upon if the app is running in the browser or Electron.
+Now open your app.component.ts file and replace the contents with the following.  Note we are just adding the electron service from ngx-electron and injecting it into the constructor.  OnInit we are using the electron API to update the title based upon if the app is running in the browser or Electron.
 
 ```
 import { Component } from '@angular/core';
@@ -125,7 +125,7 @@ Run the application again
 
 ![](./images/Electron_API_Error.png)
 
-It looks like we now have an issue with Electron utilizing NodeJS.Require behind the scenes. What happened? It would appear that whatever is supplying the definition for NodeJS might be incorrect.  Looking at the package.json file we can see that the types package for Node is using version 12.  We need to use version 14 or higher.  Update this to be 14 or greater (currently 16 is latest at the time of this tutorial.) and run the following again.
+It looks like we now have an issue with Electron utilizing NodeJS.Require behind the scenes. What happened? Whatever is supplying the definition for NodeJS might be incorrect.  Looking at the package.json file we can see that the types package for Node is using version 12.  We need to use version 14 or higher.  Update this to be 14 or greater (currently 16 is latest at the time of this tutorial.) and run the following again.
 ``` 
 package.json
 
@@ -143,8 +143,7 @@ Module not found: Error: Can't resolve 'fs' in {folder path}
 Error: Can't resolve 'path' in {folder path}
 ```
 
-
-In Webpack 5 NodeJS polyfills are no longer supplied by default. Traditionally we would use Webpack to add any polyfills if needed but since Angular 6 the Webpack eject functionality has been removed. We will need a way of adding these polyfills to Webpack in order for this to work.
+In Webpack 5, NodeJS polyfills are no longer supplied by default. Traditionally we would use Webpack to add any polyfills if needed but since Angular 6 the Webpack eject functionality has been removed. We will need a way of adding these polyfills to Webpack for this to work.
 
 Thankfully, there is a Webpack plugin to help here that is available through npm.  Let's install it now in the app.
 
@@ -154,7 +153,7 @@ Now we need some way to add this to Webpack.  To do this we are going to have to
 
 ``` npm i -D @angular-builders/custom-webpack ```
 
-Before we can utilize this tooling we will need to create a custom webpack configuration file.  In the root of your application add a file 'polyfill-webpack.config.js'.
+Before we can utilize this tooling, we will need to create a custom webpack configuration file.  In the root of your application add a file 'polyfill-webpack.config.js'.
 
 We will keep this simple for this purpose but note that you can add any necessary missing polyfills here to execute your application.
 
@@ -175,7 +174,7 @@ module.exports = {
   }
 };
 ```
-we will exclude the console polyfill as we can use the browser console and for the purposes of this tutorial we will set the fs polyfill resolution to false.  If you need to use fs or other similar functionality in your applications you will need to import them from a library like browserify and resolve fs: using the require browserify library instead of false.  False will ignore any dependency errors for that functionality.
+we will exclude the console polyfill as we can use the browser console and for the purposes of this tutorial, we will set the fs polyfill resolution to false.  If you need to use fs or other similar functionality in your applications, you will need to import them from a library like browserify and resolve fs: using the require browserify library instead of false.  False will ignore any dependency errors for that functionality.
 
 Now that we have a custom webpack config we need to tell Angular to use it when building the application.
 Open your angular.json file and look for the builder property in the architect folder (projects:{app-name}:architect:build:builder)
@@ -201,7 +200,7 @@ Start the application again.
 SUCCESS! Note the Electron header we added.
 ![](./images/Success_Electron_Running.png)
 
-Running the Angular in the browser should still work lets test it!
+Running the Angular in the browser should still work let’s test it!
 
 ``` ng serve -o ```
 
@@ -217,10 +216,29 @@ I hope this has helped anyone who was running into issues!
 ### Repository
 [View the repository](https://github.com/tallan/angular-electron)
 
+### Machine Installed Dependencies
+Node: 14.16.1
+Package Manager: npm 6.14.12
+OS: win32 x64
+
+Angular: 12.2.1
+... animations, cli, common, compiler, compiler-cli, core, forms
+... platform-browser, platform-browser-dynamic, router
+
+Package                         Version
+---------------------------------------------------------
+@angular-devkit/architect       0.1202.1
+@angular-devkit/build-angular   12.2.1
+@angular-devkit/core            12.2.1
+@angular-devkit/schematics      12.2.1
+@schematics/angular             12.2.1
+rxjs                            6.6.7
+typescript                      4.3.5
+
+
 ### Folder Structure
 
-(GREEN: Added, YELLOW: Modified) Ignore the Images and READMe addition and changes.
-
+(GREEN: Added, YELLOW: Modified) Ignore the Images and README addition and changes.
 
 ![](./images/folder.structure.png)
 
@@ -252,6 +270,7 @@ app.module.ts
 tsconfig.json
 
 ![](./images/tsconfig.changes.png)
+
 
 
 
